@@ -61,4 +61,9 @@
     <Folder Include="dbo\StoredProcedures" />
     <Folder Include="Scripts" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\Recipies.sql" />
+    <Build Include="dbo\Tables\Ingredients.sql" />
+    <Build Include="dbo\Tables\RecipiesIngredients.sql" />
+  </ItemGroup>
 </Project>
