@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[RecipiesIngredients]
 (
-	[Id] INT NOT NULL PRIMARY KEY, 
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
     [RecipeId] INT NOT NULL, 
     [IngredientId] INT NOT NULL, 
     [Quantity] NVARCHAR(10) NOT NULL

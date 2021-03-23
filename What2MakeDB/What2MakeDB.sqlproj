@@ -69,4 +69,7 @@
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="What2MakeDB.publish.xml" />
+  </ItemGroup>
 </Project>
