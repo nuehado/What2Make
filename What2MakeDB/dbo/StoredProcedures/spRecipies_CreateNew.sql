@@ -7,9 +7,15 @@ AS
 begin
 	set nocount on;
 
-	insert into dbo.Recipies(RecipeName, [Description], Instructions)
-	values (@RecipeName, @Description, @Instructions)
-
-	set @Id = SCOPE_IDENTITY();
+	if not exists (select 1 from dbo.Recipies where RecipeName = @RecipeName)
+	begin
+		insert into dbo.Recipies(RecipeName, [Description], Instructions)
+		values (@RecipeName, @Description, @Instructions);
+	end
+	
+	select top 1 @Id = Id
+	from dbo.Recipies
+	where RecipeName = @RecipeName;
+	
 
 end

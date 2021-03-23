@@ -68,6 +68,8 @@
     <Build Include="dbo\StoredProcedures\spRecipies_ReadAll.sql" />
     <Build Include="dbo\StoredProcedures\spRecipies_ReadById.sql" />
     <Build Include="dbo\StoredProcedures\spRecipies_CreateNew.sql" />
+    <Build Include="dbo\StoredProcedures\spIngredients_CreateNew.sql" />
+    <Build Include="Scripts\StoredProcedureTests.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
