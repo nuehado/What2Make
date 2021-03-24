@@ -1,4 +1,5 @@
-﻿/*test recipe creation*/
+﻿/*
+/*test recipe creation*/
 begin
 	declare @RecipeName nvarchar(50) = 'test recipe';
 	declare @Description nvarchar(200) = 'test description';
@@ -71,3 +72,4 @@ begin
 	where [copy].RecipeName is null
 	order by Matches desc
 end
+*/
