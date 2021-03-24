@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DbAccess\" />
     <Folder Include="Models\" />
     <Folder Include="DataAccess\" />
   </ItemGroup>
