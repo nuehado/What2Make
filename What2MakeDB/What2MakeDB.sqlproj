@@ -71,6 +71,7 @@
     <Build Include="dbo\StoredProcedures\spIngredients_CreateNew.sql" />
     <Build Include="Scripts\StoredProcedureTests.sql" />
     <Build Include="dbo\StoredProcedures\spRecipies_IngredientsSearch.sql" />
+    <Build Include="dbo\StoredProcedures\spIngredients_GetByRecipeId.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

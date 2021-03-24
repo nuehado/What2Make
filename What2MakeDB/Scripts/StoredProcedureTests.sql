@@ -72,4 +72,16 @@ begin
 	where [copy].RecipeName is null
 	order by Matches desc
 end
+
+/*test getting all ingredients for one recipe*/
+begin
+	declare @RecipeId int = 14
+
+	set nocount on
+
+	select i.[Id], [IngredientName], [Quantity]
+	from dbo.Ingredients i
+	inner join dbo.RecipiesIngredients ri on RecipeId = @RecipeId
+	where i.Id = ri.IngredientId;
+end
 */
