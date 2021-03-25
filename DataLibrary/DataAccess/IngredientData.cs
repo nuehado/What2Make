@@ -12,14 +12,15 @@ namespace DataLibrary.DataAccess
         private readonly IDbAccess _dbAccess;
         private readonly string _connectionStringName;
 
-        public IngredientData(IDbAccess dbAccess) //TODO: populate dependency injected _connectionStringName field
+        public IngredientData(IDbAccess dbAccess, ConnectionStringData connectionStringData)
         {
             _dbAccess = dbAccess;
+            _connectionStringName = connectionStringData.SqlConnectionStringName;
         }
 
-        public Task CreateIngredient(IngredientCreateModel ingredient)
+        public Task CreateIngredient(IngredientFullModel ingredient, int recipeId)
         {
-            return _dbAccess.SaveData("dbo.pIngredients_CreateNew", new { IngredientName = ingredient.IngredientName, Quantity = ingredient.Quantity, RecipeId = ingredient.RecipeId }, _connectionStringName);
+            return _dbAccess.SaveData("dbo.spIngredients_CreateNew", new { IngredientName = ingredient.IngredientName, Quantity = ingredient.Quantity, RecipeId = recipeId }, _connectionStringName);
         }
 
         public Task<List<IngredientFullModel>> GetIngredientsByRecipieId(int recipeId)

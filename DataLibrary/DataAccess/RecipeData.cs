@@ -15,14 +15,15 @@ namespace DataLibrary.DataAccess
         private readonly IDbAccess _dbAccess;
         private readonly string _connectionStringName;
 
-        public RecipeData(IDbAccess dbAccess) //TODO: populate dependency injected _connectionStringName field
+        public RecipeData(IDbAccess dbAccess, ConnectionStringData connectionStringData)
         {
             _dbAccess = dbAccess;
+            _connectionStringName = connectionStringData.SqlConnectionStringName;
         }
 
-        public Task<List<RecipeSearchModel>> SearchRecipiesByIngredient(string Ingredient1, string Ingredient2 = null, string Ingredient3 = null, string Ingredient4 = null, string Ingredient5 = null)
+        public Task<List<RecipeSearchResultModel>> SearchRecipiesByIngredient(string Ingredient1, string Ingredient2 = null, string Ingredient3 = null, string Ingredient4 = null, string Ingredient5 = null)
         {
-            return _dbAccess.LoadData<RecipeSearchModel, dynamic>("dbo.spRecipies_IngredientsSearch",
+            return _dbAccess.LoadData<RecipeSearchResultModel, dynamic>("dbo.spRecipies_IngredientsSearch",
                                                                   new { Ingredient1, Ingredient2, Ingredient3, Ingredient4, Ingredient5 },
                                                                   _connectionStringName);
         }

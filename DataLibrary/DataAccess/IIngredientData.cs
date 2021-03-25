@@ -6,7 +6,7 @@ namespace DataLibrary.DataAccess
 {
     public interface IIngredientData
     {
-        Task CreateIngredient(IngredientCreateModel ingredient);
+        Task CreateIngredient(IngredientFullModel ingredient, int recipeId);
         Task<List<IngredientFullModel>> GetIngredientsByRecipieId(int recipeId);
     }
 }

@@ -8,6 +8,6 @@ namespace DataLibrary.DataAccess
     {
         Task<int> CreateRecipe(RecipeModel recipe);
         Task<RecipeModel> GetRecipeById(int orderId);
-        Task<List<RecipeSearchModel>> SearchRecipiesByIngredient(string Ingredient1, string Ingredient2 = null, string Ingredient3 = null, string Ingredient4 = null, string Ingredient5 = null);
+        Task<List<RecipeSearchResultModel>> SearchRecipiesByIngredient(string Ingredient1, string Ingredient2 = null, string Ingredient3 = null, string Ingredient4 = null, string Ingredient5 = null);
     }
 }
