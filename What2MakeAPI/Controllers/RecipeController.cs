@@ -98,7 +98,7 @@ namespace What2MakeAPI.Controllers
         }
         /*get command for searching for recipes from a list of 1-5 ingredients.
         This approach uses a dto object to define the route based off an input model (can be automated with QueryHelpers in UI layer). route should be of format:
-        ServerAddress/api/Recipe/search2/ingredients?Ingredient1=mustard&&Ingredient2=oil&&Ingredient3=romain%20lettuce
+        ServerAddress/api/Recipe/Search/ingredients?Ingredient1=mustard&&Ingredient2=oil&&Ingredient3=romain%20lettuce
         incrementing up to 5 ingredients
         */
         [HttpGet("ingredients")]
@@ -106,14 +106,19 @@ namespace What2MakeAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Get([FromQuery] IngredientsSearchModel ingredients)
+        public async Task<IActionResult> Get([FromQuery] List<string> ingredients)
         {
-            if (string.IsNullOrWhiteSpace(ingredients.Ingredient1))
+            if (string.IsNullOrWhiteSpace(ingredients[0]))
             {
                 return BadRequest();
             }
 
-            search.recipes = await _recipeData.SearchRecipiesByIngredient(ingredients.Ingredient1, ingredients.Ingredient2, ingredients.Ingredient3, ingredients.Ingredient4, ingredients.Ingredient5);
+            while (ingredients.Count < 5)
+            {
+                ingredients.Add("");
+            }
+
+            search.recipes = await _recipeData.SearchRecipiesByIngredient(ingredients[0], ingredients[1], ingredients[2], ingredients[3], ingredients[4]);
 
             if (search.recipes.Count < 1)
             {

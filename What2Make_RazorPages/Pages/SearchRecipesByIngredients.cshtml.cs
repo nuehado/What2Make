@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -15,19 +16,19 @@ namespace What2Make_RazorPages.Pages
         [BindProperty]
         public RecipeSearchListModel recipeSearchResults { get; set; }
 
-        [BindProperty]
-        public string[] Ingredients { get; set; } = new string[5];
-
         [BindProperty(SupportsGet = true)]
-        public string IngredientList { get; set; }
+        [MaxLength(50, ErrorMessage = "Ingredient name too long")]
+        public List<string> Ingredients { get; set; } = new List<string>();
 
         [BindProperty(SupportsGet = true)]
         public string ErrorString { get; set; }
 
         [BindProperty]
-        public int recipeId { get; set; }
+        public int RecipeId { get; set; }
 
         public string errorString;
+
+        private readonly int maxSearchFields = 5;
 
         private readonly IHttpClientFactory _clientFactory;
 
@@ -38,42 +39,49 @@ namespace What2Make_RazorPages.Pages
 
         public async Task OnGet()
         {
-            if (IngredientList != null)
-            {
-                Ingredients = IngredientList.Split('-');
-            }
             if (Ingredients.Count() > 0) //TODO: set up data validation and change to ModelState.IsValid == true
             {
                 if (Ingredients[0] != null)
                 {
+                    while (Ingredients.Count < maxSearchFields)
+                    {
+                        Ingredients.Add("");
+                    }
+
+                    string searchParams = "ingredients?";
+                    for (int i = 0; i < maxSearchFields; i++)
+                    {
+                         searchParams += ($"Ingredients[{i}]={Ingredients[i]}&");
+                    }
+
                     var client = _clientFactory.CreateClient("w2m");
                     try
                     {
-                        recipeSearchResults = await client.GetFromJsonAsync<RecipeSearchListModel>($"recipe/search/ingredients?Ingredient1={Ingredients[0]}&&Ingredient2={Ingredients[1]}&&Ingredient3={Ingredients[2]}&&Ingredient4={Ingredients[3]}&&Ingredient5={Ingredients[4]}");
+                        recipeSearchResults = await client.GetFromJsonAsync<RecipeSearchListModel>($"recipe/search/{searchParams}");
                         errorString = null;
                     }
                     catch (Exception)
                     {
 
-                        errorString = $"No recipes were found with those ingredients";
+                        errorString = $"No recipes found for any of those ingredients";
                     }
                 }
             }
             else
             {
-                Ingredients = new string[5];
+                Ingredients = new List<string>();
             }
         }
 
         public RedirectToPageResult OnPost()
         {
-            string ingredients = string.Join('-', Ingredients);
-            return RedirectToPage("./SearchRecipesByIngredients", new { IngredientList = ingredients, ErrorString = errorString });
+            
+            return RedirectToPage("./SearchRecipesByIngredients", new { Ingredients, ErrorString = errorString });
         }
 
         public RedirectToPageResult OnPostGoToRecipe()
         {
-            return RedirectToPage("./Recipe", new { Id = recipeId });
+            return RedirectToPage("./Recipe", new { Id = RecipeId });
         }
     }
 }
