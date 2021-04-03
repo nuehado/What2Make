@@ -1,0 +1,41 @@
+﻿@page
+@model What2Make_RazorPages.Pages.RecipeModel
+@{
+    ViewData["Title"] = "Recipe";
+}
+<h1>@ViewData["Recipe"]</h1>
+
+@if (string.IsNullOrWhiteSpace(Model.errorString) == false)
+{
+    <div class="h2" style="white-space: pre-line">@Model.errorString</div>
+}
+else if (Model.recipe is null)
+{
+    <div class="h4">Loading...</div>
+}
+else
+{
+    <h3 class="text-center">@Model.recipe.Recipe.RecipeName</h3>
+
+
+    <dl class="row">
+        <dt class="col-sm-2">Description</dt>
+        <dd class="col-sm">@Model.recipe.Recipe.Description</dd>
+    </dl>
+    <hr width="75%" />
+    <dl class="row">
+        <dt class="col-sm-2">Ingredients</dt>
+        <dd class="col-sm">
+            @foreach (var ingredient in Model.recipe.Ingredients)
+            {
+                <p>@ingredient.IngredientName: @ingredient.Quantity</p>
+            }
+        </dd>
+    </dl>
+    <hr width="75%" />
+    <dl class="row">
+        <dt class="col-sm-2">Instructions</dt>
+        <dd class="col-sm" style="white-space: pre-line">@Model.recipe.Recipe.Instructions</dd>
+    </dl>
+
+}

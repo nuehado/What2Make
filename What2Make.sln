@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLibrary", "DataLibrary\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "What2MakeAPI", "What2MakeAPI\What2MakeAPI.csproj", "{364B6040-6158-422C-AE76-97F805B29183}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "What2Make_RazorPages", "What2Make_RazorPages\What2Make_RazorPages.csproj", "{26F4A5C8-4224-4176-B2AB-41D463496FC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "What2Make_RazorPages", "What2Make_RazorPages\What2Make_RazorPages.csproj", "{26F4A5C8-4224-4176-B2AB-41D463496FC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

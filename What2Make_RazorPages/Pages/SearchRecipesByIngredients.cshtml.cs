@@ -14,7 +14,7 @@ namespace What2Make_RazorPages.Pages
     public class SearchRecipesByIngredientsModel : PageModel
     {
         [BindProperty]
-        public RecipeSearchListModel recipeSearchResults { get; set; }
+        public RecipeSearchGroupModel recipeSearchResults { get; set; }
 
         [BindProperty(SupportsGet = true)]
         [MaxLength(50, ErrorMessage = "Ingredient name too long")]
@@ -57,7 +57,7 @@ namespace What2Make_RazorPages.Pages
                     var client = _clientFactory.CreateClient("w2m");
                     try
                     {
-                        recipeSearchResults = await client.GetFromJsonAsync<RecipeSearchListModel>($"recipe/search/{searchParams}");
+                        recipeSearchResults = await client.GetFromJsonAsync<RecipeSearchGroupModel>($"recipe/search/{searchParams}");
                         errorString = null;
                     }
                     catch (Exception)

@@ -35,7 +35,7 @@ namespace What2MakeAPI.Controllers
                 "Instructions": "instructions-postman"
             },
 
-            "IngredientList":[
+            "Ingredients":[
                 {
                     "IngredientName": "ingredientName1-postman",
                     "Quantity": "quant1"
@@ -56,7 +56,7 @@ namespace What2MakeAPI.Controllers
         {
             int id = await _recipeData.CreateRecipe(fullRecipe.Recipe);
 
-            foreach (var ingredient in fullRecipe.IngredientList)
+            foreach (var ingredient in fullRecipe.Ingredients)
             {
                 await _ingredientData.CreateIngredient(ingredient, id);
             }
@@ -87,7 +87,7 @@ namespace What2MakeAPI.Controllers
             {
                 var ingredients = await _ingredientData.GetIngredientsByRecipieId(id);
 
-                RecipeAndIngredientsModel fullRecipe = new RecipeAndIngredientsModel { Recipe = recipe, IngredientList = ingredients };
+                RecipeAndIngredientsModel fullRecipe = new RecipeAndIngredientsModel { Recipe = recipe, Ingredients = ingredients };
                 return Ok(fullRecipe);
             }
             else

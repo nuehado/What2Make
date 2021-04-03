@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace What2Make_RazorPages.Models.Read
 {
-    public class RecipeSearchListModel
+    public class RecipeAndIngredientsModel
     {
-        public List<RecipeSearchModel> Recipes { get; set; }
+        public RecipeModel Recipe { get; set; }
+        public List<IngredientModel> Ingredients { get; set; }
     }
 }

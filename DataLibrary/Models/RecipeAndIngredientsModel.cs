@@ -7,6 +7,6 @@ namespace DataLibrary.Models
     public class RecipeAndIngredientsModel
     {
         public RecipeModel Recipe { get; set; }
-        public List<IngredientFullModel> IngredientList { get; set; }
+        public List<IngredientFullModel> Ingredients { get; set; }
     }
 }
