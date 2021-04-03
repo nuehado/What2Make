@@ -17,15 +17,17 @@ namespace What2MakeAPI.Controllers
     {
         private readonly IRecipeData _recipeData;
         private readonly IIngredientData _ingredientData;
+        RecipeSearchListModel search;
 
         public RecipeController(IRecipeData recipeData, IIngredientData ingredientData)
         {
             _recipeData = recipeData;
             _ingredientData = ingredientData;
+            search = new RecipeSearchListModel();
         }
 
 
-        /*post action for inserting a new recipe, it's ingredients, and building their many-many relatonship. JSON input should have following raw format:
+        /*post action for inserting a new recipe, it's ingredients, and building their many-many relatonship. JSON body should have following raw format:
             {
             "Recipe":{
                 "RecipeName": "recipename-postman",
@@ -94,50 +96,33 @@ namespace What2MakeAPI.Controllers
             }
 
         }
-        /*get command option 1 for searching for recipes from a list of 1-5 ingredients.
-        This approach uses primative url rout attributes for each ingredientName string. route should be of format:
-        ServerAddress/api/Recipe/search/mustard/ketchup/romain%20lettuce/n/n
-        incrementing up to 5 ingredients
-        */
-        [HttpGet("{Ingredient1}/{Ingredient2}/{Ingredient3}/{Ingredient4}/{Ingredient5}")]
-        [ActionName("Search")]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Get(string Ingredient1 = null, string Ingredient2 = null, string Ingredient3 = null, string Ingredient4 = null, string Ingredient5 = null)
-        {
-            if (string.IsNullOrWhiteSpace(Ingredient1))
-            {
-                return BadRequest();
-            }
-
-            var recipes = await _recipeData.SearchRecipiesByIngredient(Ingredient1, Ingredient2, Ingredient3, Ingredient4, Ingredient5);
-
-            if (recipes.Count < 1)
-            {
-                return NotFound();
-            }
-            else
-            {
-                return Ok(recipes);
-            }
-            
-        }
-        /*get command option 2 for searching for recipes from a list of 1-5 ingredients.
+        /*get command for searching for recipes from a list of 1-5 ingredients.
         This approach uses a dto object to define the route based off an input model (can be automated with QueryHelpers in UI layer). route should be of format:
         ServerAddress/api/Recipe/search2/ingredients?Ingredient1=mustard&&Ingredient2=oil&&Ingredient3=romain%20lettuce
         incrementing up to 5 ingredients
         */
         [HttpGet("ingredients")]
-        [ActionName("Search2")]
+        [ActionName("Search")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Get([FromQuery] IngredientsSearchModel ingredients)
         {
-            var recipes = await _recipeData.SearchRecipiesByIngredient(ingredients.Ingredient1, ingredients.Ingredient2, ingredients.Ingredient3, ingredients.Ingredient4, ingredients.Ingredient5);
+            if (string.IsNullOrWhiteSpace(ingredients.Ingredient1))
+            {
+                return BadRequest();
+            }
 
-            return Ok(recipes);
+            search.recipes = await _recipeData.SearchRecipiesByIngredient(ingredients.Ingredient1, ingredients.Ingredient2, ingredients.Ingredient3, ingredients.Ingredient4, ingredients.Ingredient5);
+
+            if (search.recipes.Count < 1)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(search);
+            }
         }
     }
 }

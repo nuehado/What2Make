@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/recipe/search2/ingredients?ingredient1=hot%20dog&&ingredient2=romain%20lettuce",
+      "launchUrl": "api/recipe/search/ingredients?ingredient1=hot%20dog&&ingredient2=romain%20lettuce",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +20,7 @@
     "What2MakeAPI": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/recipe/search2/ingredients?ingredient1=hot%20dog&&ingredient2=romain%20lettuce",
+      "launchUrl": "api/recipe/search/ingredients?ingredient1=hot%20dog&&ingredient2=romain%20lettuce",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
