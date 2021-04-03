@@ -7,7 +7,9 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "What2MakeDB", "What2MakeDB\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLibrary", "DataLibrary\DataLibrary.csproj", "{D1208EF6-94BA-4283-A43D-E08E52AE85B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "What2MakeAPI", "What2MakeAPI\What2MakeAPI.csproj", "{364B6040-6158-422C-AE76-97F805B29183}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "What2MakeAPI", "What2MakeAPI\What2MakeAPI.csproj", "{364B6040-6158-422C-AE76-97F805B29183}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "What2Make_RazorPages", "What2Make_RazorPages\What2Make_RazorPages.csproj", "{26F4A5C8-4224-4176-B2AB-41D463496FC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{364B6040-6158-422C-AE76-97F805B29183}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{364B6040-6158-422C-AE76-97F805B29183}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{364B6040-6158-422C-AE76-97F805B29183}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26F4A5C8-4224-4176-B2AB-41D463496FC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26F4A5C8-4224-4176-B2AB-41D463496FC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26F4A5C8-4224-4176-B2AB-41D463496FC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26F4A5C8-4224-4176-B2AB-41D463496FC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
