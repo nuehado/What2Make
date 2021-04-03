@@ -24,6 +24,11 @@ namespace What2Make_RazorPages
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddHttpClient();
+            services.AddHttpClient("w2m", config =>
+            {
+                config.BaseAddress = new Uri(Configuration.GetValue<string>("w2mAPI"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
