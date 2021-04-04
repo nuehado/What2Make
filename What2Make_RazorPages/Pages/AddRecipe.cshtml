@@ -1,0 +1,105 @@
+﻿@page
+@model What2Make_RazorPages.Pages.AddRecipeModel
+@{
+    ViewData["Title"] = "AddRecipe";
+}
+
+<h1>Add Recipe</h1>
+
+<form id="myForm" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div>
+        Recipe Name
+        <input class="form-control" asp-for="CreateFullRecipeModel.Recipe.RecipeName" />
+        <span class="text-danger" asp-validation-for="CreateFullRecipeModel.Recipe.RecipeName"></span> <br />
+        Description
+        <textarea class="form-control" rows="1" asp-for="CreateFullRecipeModel.Recipe.Description"></textarea>
+        <span class="text-danger" asp-validation-for="CreateFullRecipeModel.Recipe.Description"></span> <br />
+    </div>
+    <div class="list-group" id="ingredients">
+        Ingredients
+        <div class="input-group mb-1" id="ingredientTemplate" hidden="hidden">
+            <input type="text" class="form-control col-sm-3 ingredient" id="ingredient[0]" asp-for="CreateFullRecipeModel.Ingredients[0].IngredientName" value="" placeholder="Ingredient name" disabled="disabled" />
+            <input type="text" class="form-control col-sm-2 quantity" id="quant[0]" asp-for="CreateFullRecipeModel.Ingredients[0].Quantity" value="" placeholder="Quantity" disabled="disabled" />
+            <button class="btn btn-outline-warning removeBtn" type="button" id="remove">Remove</button>
+            <span class="text-danger mx-3" id="ingredientVal[0]" asp-validation-for="CreateFullRecipeModel.Ingredients[0].IngredientName"></span>
+            <span class="text-danger mx-3" id="quantVal[0]" asp-validation-for="CreateFullRecipeModel.Ingredients[0].Quantity"></span>
+        </div>
+    </div>
+    <button id="addButton" class="btn btn-outline-success">Add Ingredient</button>
+    <div class="mb-3">
+        <label class="col-form-label">Instructions</label>
+        <textarea class="form-control" rows="6" asp-for="CreateFullRecipeModel.Recipe.Instructions"></textarea>
+        <span class="text-danger" asp-validation-for="CreateFullRecipeModel.Recipe.Instructions"></span> <br />
+    </div>
+    <button id="submitButton" class="btn btn-primary" type="submit">Save Recipe</button>
+</form>
+
+
+@section scripts{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/StringListValidation.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var $i = 0;
+            $('#addButton').click(function (event) {
+                event.preventDefault();
+                
+                var $newField = $("#ingredientTemplate").clone().appendTo('#ingredients');
+                $newField.attr("id", 'ingredient' + $i);
+                $newField.removeAttr("hidden");
+
+                var $newName = 'Ingredients[' + $i + '].IngredientName';
+                $newField.children("input").eq(0).attr("id", 'ingredient[' + $i + ']');
+                $newField.children("input").eq(0).attr("name", $newName);
+                $newField.children("input").eq(0).removeAttr("disabled");
+                $newField.children("span").eq(0).attr("data-valmsg-for", $newName);
+
+                $newName = 'IngredientList[' + $i + '].Quantity';
+                $newField.children("input").eq(1).attr("id", 'quant[' + $i + ']');
+                $newField.children("input").eq(1).attr("name", $newName);
+                $newField.children("input").eq(1).removeAttr("disabled");
+                $newField.children("span").eq(1).attr("data-valmsg-for", $newName);
+
+                $newField.children("button").attr("id", 'remove[' + $i + ']');
+
+                $('#myForm').removeData("validator");
+                $('#myForm').removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse('#myForm');
+                $i++;
+            });
+
+            $('#myForm').on("click",".removeBtn", function (event) {
+                event.preventDefault();
+                $(this).closest('.input-group').remove();
+            });
+
+            var $submitCaller = 'user';
+            $('#myForm').submit(function (event) {
+                if ($submitCaller == 'user') {
+                    event.preventDefault();
+                    $i = -1;
+                    $('.ingredient').each(function (i, obj) {
+                        $(this).attr("name", 'CreateFullRecipeModel.Ingredients[' + $i + '].IngredientName');
+                        $i++;
+                    })
+                    $i = -1;
+                    $('.quantity').each(function (i, obj) {
+                        $(this).attr("name", 'CreateFullRecipeModel.Ingredients[' + $i + '].Quantity');
+                        $i++;
+                    })
+                    $submitCaller = 'callback';
+                    $('#myForm').submit();
+                }
+            });
+
+        });
+    </script>
+    <script src="~/js/StringListValidation.js"></script>
+
+}
