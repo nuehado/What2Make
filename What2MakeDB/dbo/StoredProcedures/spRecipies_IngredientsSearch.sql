@@ -13,7 +13,11 @@ begin
 	from dbo.Recipies r
 		inner join dbo.RecipiesIngredients ri on ri.RecipeId = r.Id
 		inner join dbo.Ingredients i on i.Id = ri.IngredientId
-		where i.IngredientName in (@Ingredient1, @Ingredient2, @Ingredient3, @Ingredient4, @Ingredient5)
+		where i.IngredientName like '%'+@Ingredient1+'%'
+		or i.IngredientName like '%'+@Ingredient2+'%'
+		or i.IngredientName like '%'+@Ingredient3+'%'
+		or i.IngredientName like '%'+@Ingredient4+'%'
+		or i.IngredientName like '%'+@Ingredient5+'%'
 	)
 
 	select t.Id, t.RecipeName, t.[Description], t.Matches

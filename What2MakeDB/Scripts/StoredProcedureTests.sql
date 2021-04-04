@@ -49,21 +49,25 @@ end
 /*test searching by ingredient*/
 begin
 	
-	declare @Ingredient1 nvarchar(50) = 'cherry tomatoes';
+	declare @Ingredient1 nvarchar(50) = 'oil';
 	declare @Ingredient2 nvarchar(50) = 'hot dog bun';
 	declare @Ingredient3 nvarchar(50) = 'KETCHUP';
-	declare @Ingredient4 nvarchar(50) = 'romain lettuce';
-	declare @Ingredient5 nvarchar(50) = 'HOT doG';
+	declare @Ingredient4 nvarchar(50) = 'rom';
+	declare @Ingredient5 nvarchar(50) = 'doG';
 
 	set nocount on;
 
 	with t as(
 	select r.Id, r.RecipeName, [Description], ROW_NUMBER() over(partition by RecipeName order by RecipeName) as Matches 
 	from dbo.Recipies r
-	inner join dbo.RecipiesIngredients ri on ri.RecipeId = r.Id
-	inner join dbo.Ingredients i on i.Id = ri.IngredientId
-	where i.IngredientName in (@Ingredient1, @Ingredient2, @Ingredient3, @Ingredient4, @Ingredient5)
-	)
+		inner join dbo.RecipiesIngredients ri on ri.RecipeId = r.Id
+		inner join dbo.Ingredients i on i.Id = ri.IngredientId
+		where i.IngredientName like '%'+@Ingredient1+'%'
+		or i.IngredientName like '%'+@Ingredient2+'%'
+		or i.IngredientName like '%'+@Ingredient3+'%'
+		or i.IngredientName like '%'+@Ingredient4+'%'
+		or i.IngredientName like '%'+@Ingredient5+'%'
+		)
 
 	select t.Id, t.RecipeName, t.[Description], t.Matches
 	from t
