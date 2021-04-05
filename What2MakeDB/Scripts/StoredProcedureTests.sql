@@ -89,3 +89,36 @@ begin
 	where i.Id = ri.IngredientId;
 end
 */
+
+/*test for updating recipe information
+begin
+	declare @Id int = 7015;
+	declare @RecipeName nvarchar(50) = 'updated name';
+	declare @Description nvarchar(200) = 'updated description';
+	declare @Instructions nvarchar(2000) = 'updated instructions';
+	set nocount on;
+
+	update dbo.Recipies
+	set RecipeName = @RecipeName,
+	[Description] = @Description,
+	Instructions = @Instructions
+	where Id = @Id
+
+end
+*/
+
+/*test for updating ingredient quantity for recipe
+begin
+	declare @RecipeId int = 7015;
+	declare @IngredientId int = 6064;
+	declare @Quantity nvarchar(10) = 'updated q';
+
+	set nocount on;
+
+	update dbo.RecipiesIngredients
+	set Quantity = @Quantity
+	where RecipeId = @RecipeId and IngredientId = @IngredientId
+
+end
+
+*/
