@@ -96,6 +96,37 @@ namespace What2MakeAPI.Controllers
             }
 
         }
+        /*update command for updating a recipie's:
+         * name
+         * description
+         * instructions
+         * ingredient quantites
+         * AND
+         * adding new ingredients
+         */
+        [HttpPost]
+        [ActionName("Update")]
+        [ValidateModel]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Post(RecipeIngredientsUpdateModel updatedRecipe)
+        {
+            await _recipeData.UpdateRecipe(updatedRecipe.Recipe);
+
+            foreach (var ingredient in updatedRecipe.UpdatedIngredients)
+            {
+                await _ingredientData.UpdateIngredientQuantity(updatedRecipe.Recipe.Id, ingredient);
+            }
+
+            foreach (var ingredient in updatedRecipe.NewIngredients)
+            {
+                await _ingredientData.CreateIngredient(ingredient, updatedRecipe.Recipe.Id);
+            }
+
+            return Ok(new { updatedRecipe.Recipe.Id });
+        }
+
+
         /*get command for searching for recipes from a list of 1-5 ingredients.
         This approach uses a dto object to define the route based off an input model (can be automated with QueryHelpers in UI layer). route should be of format:
         ServerAddress/api/Recipe/Search/ingredients?Ingredient1=mustard&&Ingredient2=oil&&Ingredient3=romain%20lettuce

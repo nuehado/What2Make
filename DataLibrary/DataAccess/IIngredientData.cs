@@ -8,5 +8,6 @@ namespace DataLibrary.DataAccess
     {
         Task CreateIngredient(IngredientFullModel ingredient, int recipeId);
         Task<List<IngredientFullModel>> GetIngredientsByRecipieId(int recipeId);
+        Task<int> UpdateIngredientQuantity(int recipeId, IngredientQuantityUpdateModel ingredient);
     }
 }

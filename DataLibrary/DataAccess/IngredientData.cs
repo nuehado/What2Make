@@ -27,5 +27,10 @@ namespace DataLibrary.DataAccess
         {
             return _dbAccess.LoadData<IngredientFullModel, dynamic>("spIngredients_GetByRecipeId", new { RecipeId = recipeId }, _connectionStringName);
         }
+
+        public async Task<int> UpdateIngredientQuantity(int recipeId, IngredientQuantityUpdateModel ingredient)
+        {
+            return await _dbAccess.SaveData("dbo.spRecipiesIngredients_UpdateQuantity", new { RecipeId = recipeId, IngredientId = ingredient.Id, Quantity = ingredient.Quantity }, _connectionStringName);
+        }
     }
 }
