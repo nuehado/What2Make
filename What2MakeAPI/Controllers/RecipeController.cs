@@ -103,6 +103,38 @@ namespace What2MakeAPI.Controllers
          * ingredient quantites
          * AND
          * adding new ingredients
+
+         JSON body should have following raw format:
+         {
+            "Recipe":{
+                "Id": 7015,
+                "RecipeName": "postman name",
+                "Description": "postman description",
+                "Instructions": "postman instructions"
+            },
+
+            "UpdatedIngredients":[
+                {
+                    "Id": 6064,
+                    "Quantity": "postman 1"
+                },
+                {
+                    "Id": 6065,
+                    "Quantity": "postman 2"
+                }
+            ],
+
+            "NewIngredients":[
+                {
+                    "IngredientName": "carrots",
+                    "Quantity": "postman 3"
+                },
+                {
+                    "IngredientName": "postman ingredient",
+                    "Quantity": "postman 4"
+                }
+            ]
+            }
          */
         [HttpPost]
         [ActionName("Update")]
