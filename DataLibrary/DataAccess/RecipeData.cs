@@ -42,6 +42,16 @@ namespace DataLibrary.DataAccess
             return p.Get<int>("Id");
         }
 
+        public async Task<int> UpdateRecipe(RecipeModel recipe)
+        {
+            return await _dbAccess.SaveData("dbo.spRecipies_UpdateRecipe", new { Id = recipe.Id, RecipeName = recipe.RecipeName, Description = recipe.Description, Instructions = recipe.Instructions }, _connectionStringName);
+        }
+
+        public async Task<int> UpdateIngredientQuantity(int recipeId, int ingredientId, string quantity)
+        {
+            return await _dbAccess.SaveData("dbo.spRecipiesIngredients_UpdateQuantity", new { RecipeId = recipeId, IngredientId = ingredientId, Quantity = quantity }, _connectionStringName);
+        }
+
         public async Task<RecipeModel> GetRecipeById(int orderId)
         {
             var recipe = await _dbAccess.LoadData<RecipeModel, dynamic>("dbo.spRecipies_ReadById", new { Id = orderId }, _connectionStringName);
