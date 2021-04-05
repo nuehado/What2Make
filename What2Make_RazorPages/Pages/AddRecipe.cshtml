@@ -41,7 +41,6 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/js/StringListValidation.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -60,7 +59,7 @@
                 $newField.children("input").eq(0).removeAttr("disabled");
                 $newField.children("span").eq(0).attr("data-valmsg-for", $newName);
 
-                $newName = 'IngredientList[' + $i + '].Quantity';
+                $newName = 'Ingredients[' + $i + '].Quantity';
                 $newField.children("input").eq(1).attr("id", 'quant[' + $i + ']');
                 $newField.children("input").eq(1).attr("name", $newName);
                 $newField.children("input").eq(1).removeAttr("disabled");
@@ -100,6 +99,5 @@
 
         });
     </script>
-    <script src="~/js/StringListValidation.js"></script>
 
 }

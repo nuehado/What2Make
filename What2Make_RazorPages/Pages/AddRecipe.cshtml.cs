@@ -17,7 +17,6 @@ namespace What2Make_RazorPages.Pages
 
         public string errorString;
 
-
         private readonly IHttpClientFactory _clientFactory;
 
         public AddRecipeModel(IHttpClientFactory clientFactory)

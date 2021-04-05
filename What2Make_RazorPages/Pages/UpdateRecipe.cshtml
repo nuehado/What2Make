@@ -1,0 +1,137 @@
+﻿@page
+@model What2Make_RazorPages.Pages.UpdateRecipeModel
+@{
+    ViewData["Title"] = "UpdateRecipe";
+}
+
+@if (string.IsNullOrWhiteSpace(Model.errorString) == false)
+{
+    <div class="h2" style="white-space: pre-line">@Model.errorString</div>
+}
+else if (Model.UpdatedRecipe is null)
+{
+    <div class="h4">Loading...</div>
+}
+else
+{
+    <form id="updateForm" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div>
+            <input type="hidden" asp-for="UpdatedRecipe.Recipe.Id" />
+            Edit Recipe Name
+            <input class="form-control" asp-for="UpdatedRecipe.Recipe.RecipeName" />
+            <span class="text-danger" asp-validation-for="UpdatedRecipe.Recipe.RecipeName"></span> <br />
+            Edit Description
+            <textarea class="form-control" rows="1" asp-for="UpdatedRecipe.Recipe.Description"></textarea>
+            <span class="text-danger" asp-validation-for="UpdatedRecipe.Recipe.Description"></span> <br />
+        </div>
+        <div class="list-group" id="updateIngredients">
+            Ingredients
+            @{int i = 0;}
+            @foreach (var ingredient in Model.UpdatedRecipe.UpdatedIngredients)
+            {
+            <div class="input-group mb-1 updateIngredients">
+                <input type="text" class="form-control col-sm-3 updateIngredient" asp-for="UpdatedRecipe.UpdatedIngredients[i].IngredientName" disabled="disabled" />
+                <input type="text" class="form-control col-sm-2 updateQuantity" asp-for="UpdatedRecipe.UpdatedIngredients[i].Quantity" />
+                <input type="hidden" class="updateId" asp-for="UpdatedRecipe.UpdatedIngredients[i].Id"/>
+                <button class="btn btn-outline-warning removeBtn" type="button" id="remove">Remove</button>
+                <span class="text-danger mx-3" asp-validation-for="UpdatedRecipe.UpdatedIngredients[i].IngredientName"></span>
+                <span class="text-danger mx-3" asp-validation-for="UpdatedRecipe.UpdatedIngredients[i].Quantity"></span>
+            </div>
+                i++;
+            }
+        </div>
+        <div class="list-group" id="newIngredients">
+            <div class="input-group mb-1" id="newIngredientTemplate" hidden="hidden">
+                @{Model.UpdatedRecipe.NewIngredients.Add(new Models.Create.CreateIngredientModel());}
+                <input type="text" class="form-control col-sm-3 newIngredient" asp-for="UpdatedRecipe.NewIngredients[0].IngredientName" placeholder="Ingredient name" />
+                <input type="text" class="form-control col-sm-2 newQuantity" asp-for="UpdatedRecipe.NewIngredients[0].Quantity" placeholder="Quantity" />
+                <button class="btn btn-outline-warning removeBtn" type="button" id="remove">Remove</button>
+                <span class="text-danger mx-3" asp-validation-for="UpdatedRecipe.NewIngredients[0].IngredientName"></span>
+                <span class="text-danger mx-3" asp-validation-for="UpdatedRecipe.NewIngredients[0].Quantity"></span>
+            </div>
+        </div>
+        <button id="addButton" class="btn btn-outline-success">Add Ingredient</button>
+        <div class="mb-3">
+            <label class="col-form-label">Instructions</label>
+            <textarea class="form-control" rows="6" asp-for="UpdatedRecipe.Recipe.Instructions"></textarea>
+            <span class="text-danger" asp-validation-for="UpdatedRecipe.Recipe.Instructions"></span> <br />
+        </div>
+        <button id="submitButton" class="btn btn-primary" type="submit">Save Recipe</button>
+    </form>
+
+}
+
+@section scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var $i = 0;
+            $('#addButton').click(function (event) {
+                event.preventDefault();
+
+                var $newField = $("#newIngredientTemplate").clone().appendTo('#newIngredients');
+                $newField.attr("id", 'newIngredient' + $i);
+                $newField.removeAttr("hidden");
+
+                var $newName = 'NewIngredients[' + $i + '].IngredientName';
+                $newField.children("input").eq(0).attr("id", 'newIngredient[' + $i + ']');
+                $newField.children("input").eq(0).attr("name", $newName);
+                $newField.children("input").eq(0).removeAttr("disabled");
+                $newField.children("span").eq(0).attr("data-valmsg-for", $newName);
+
+                $newName = 'NewIngredients[' + $i + '].Quantity';
+                $newField.children("input").eq(1).attr("id", 'newQuant[' + $i + ']');
+                $newField.children("input").eq(1).attr("name", $newName);
+                $newField.children("input").eq(1).removeAttr("disabled");
+                $newField.children("span").eq(1).attr("data-valmsg-for", $newName);
+
+                $newField.children("button").attr("id", 'remove[' + $i + ']');
+
+                $('#updateForm').removeData("validator");
+                $('#updateForm').removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse('#updateForm');
+                $i++;
+            });
+
+            $('#updateForm').on("click", ".removeBtn", function (event) {
+                event.preventDefault();
+                $(this).closest('.input-group').remove();
+            });
+
+            var $submitCaller = 'user';
+            $('#updateForm').submit(function (event) {
+                if ($submitCaller == 'user') {
+                    event.preventDefault();
+                    $i = 0;
+                    $('.updateIngredient').each(function (i, obj) {
+                        $(this).attr("name", 'UpdatedRecipe.UpdatedIngredients[' + $i + '].IngredientName');
+                        $i++;
+                    })
+                    $i = 0;
+                    $('.updateQuantity').each(function (i, obj) {
+                        $(this).attr("name", 'UpdatedRecipe.UpdatedIngredients[' + $i + '].Quantity');
+                        $i++;
+                    })
+
+                    $i = -1;
+                    $('.newIngredient').each(function (i, obj) {
+                        $(this).attr("name", 'UpdatedRecipe.NewIngredients[' + $i + '].IngredientName');
+                        $i++;
+                    })
+                    $i = -1;
+                    $('.newQuantity').each(function (i, obj) {
+                        $(this).attr("name", 'UpdatedRecipe.NewIngredients[' + $i + '].Quantity');
+                        $i++;
+                    })
+                    $submitCaller = 'callback';
+                    $('#updateForm').submit();
+                }
+            });
+
+        });
+    </script>
+}
+

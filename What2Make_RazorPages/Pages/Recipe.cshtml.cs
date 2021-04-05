@@ -23,19 +23,24 @@ namespace What2Make_RazorPages.Pages
             _clientFactory = clientFactory;
         }
 
-        public async Task OnGet(int Id)
+        public async Task OnGet(int id)
         {
             var client = _clientFactory.CreateClient("w2m");
 
             try
             {
-                recipe = await client.GetFromJsonAsync<RecipeAndIngredientsModel>($"recipe/load/{Id}");
+                recipe = await client.GetFromJsonAsync<RecipeAndIngredientsModel>($"recipe/load/{id}");
                 errorString = null;
             }
             catch (Exception ex)
             {
                 errorString = $"There was an error loading the recipe:\r\n{ex.Message}";
             }
+        }
+
+        public RedirectToPageResult OnPost()
+        {
+            return RedirectToPage("./UpdateRecipe", new { Id });
         }
     }
 }
