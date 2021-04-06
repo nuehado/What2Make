@@ -72,6 +72,7 @@
     <Build Include="dbo\StoredProcedures\spIngredients_GetByRecipeId.sql" />
     <Build Include="dbo\StoredProcedures\spRecipies_UpdateRecipe.sql" />
     <Build Include="dbo\StoredProcedures\spRecipiesIngredients_UpdateQuantity.sql" />
+    <Build Include="dbo\StoredProcedures\spRecipesIngredients_Delete.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

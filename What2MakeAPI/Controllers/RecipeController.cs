@@ -155,6 +155,11 @@ namespace What2MakeAPI.Controllers
                 await _ingredientData.CreateIngredient(ingredient, updatedRecipe.Recipe.Id);
             }
 
+            foreach (var recipeIngredient in updatedRecipe.RemovedIngredients)
+            {
+                await _ingredientData.DeleteRecipeIngredient(updatedRecipe.Recipe.Id, recipeIngredient.IngredientId);
+            }
+
             return Ok(new { updatedRecipe.Recipe.Id });
         }
 

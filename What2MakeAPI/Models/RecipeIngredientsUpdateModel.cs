@@ -11,6 +11,7 @@ namespace What2MakeAPI.Models
         public RecipeModel Recipe { get; set; }
         public List<IngredientQuantityUpdateModel> UpdatedIngredients { get; set; }
         public List<IngredientFullModel> NewIngredients { get; set; }
+        public List<RecipeIngredientModel> RemovedIngredients { get; set; }
 
     }
 }

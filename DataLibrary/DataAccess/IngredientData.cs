@@ -32,5 +32,10 @@ namespace DataLibrary.DataAccess
         {
             return await _dbAccess.SaveData("dbo.spRecipiesIngredients_UpdateQuantity", new { RecipeId = recipeId, IngredientId = ingredient.Id, Quantity = ingredient.Quantity }, _connectionStringName);
         }
+
+        public async Task<int> DeleteRecipeIngredient(int recipeId, int ingredientId)
+        {
+            return await _dbAccess.SaveData("dbo.spRecipesIngredients_Delete", new { RecipeId = recipeId, IngredientId = ingredientId }, _connectionStringName);
+        }
     }
 }

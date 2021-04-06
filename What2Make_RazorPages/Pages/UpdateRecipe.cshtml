@@ -51,6 +51,9 @@ else
                 <span class="text-danger mx-3" asp-validation-for="UpdatedRecipe.NewIngredients[0].Quantity"></span>
             </div>
         </div>
+
+        <div id="removeIngredients"></div>
+
         <button id="addButton" class="btn btn-outline-success">Add Ingredient</button>
         <div class="mb-3">
             <label class="col-form-label">Instructions</label>
@@ -69,6 +72,7 @@ else
         $(document).ready(function () {
 
             var $i = 0;
+            var $j = 0;
             $('#addButton').click(function (event) {
                 event.preventDefault();
 
@@ -98,6 +102,12 @@ else
 
             $('#updateForm').on("click", ".removeBtn", function (event) {
                 event.preventDefault();
+                if ($(this).closest('.input-group').hasClass('updateIngredients')) {
+                    $removedName = 'UpdatedRecipe.RemovedIngredients[' + $j + '].IngredientId';
+                    $removedId = ($(this).siblings('.updateId').attr("value"));
+                    $('#removeIngredients').append('<input type="text" hidden="hidden" name="' + $removedName + '" value="' + $removedId + '" />');
+                    $j++;
+                }
                 $(this).closest('.input-group').remove();
             });
 
@@ -108,6 +118,11 @@ else
                     $i = 0;
                     $('.updateIngredient').each(function (i, obj) {
                         $(this).attr("name", 'UpdatedRecipe.UpdatedIngredients[' + $i + '].IngredientName');
+                        $i++;
+                    })
+                    $i = 0;
+                    $('.updateId').each(function (i, obj) {
+                        $(this).attr("name", 'UpdatedRecipe.RemovedIngredients[' + $i + '].Id'); 
                         $i++;
                     })
                     $i = 0;
