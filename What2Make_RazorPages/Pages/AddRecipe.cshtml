@@ -10,7 +10,7 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div>
         Recipe Name
-        <input class="form-control" asp-for="CreateFullRecipeModel.Recipe.RecipeName" />
+        <input class="form-control col-sm-5" asp-for="CreateFullRecipeModel.Recipe.RecipeName" />
         <span class="text-danger" asp-validation-for="CreateFullRecipeModel.Recipe.RecipeName"></span> <br />
         Description
         <textarea class="form-control" rows="1" asp-for="CreateFullRecipeModel.Recipe.Description"></textarea>
@@ -21,7 +21,7 @@
         <div class="input-group mb-1" id="ingredientTemplate" hidden="hidden">
             <input type="text" class="form-control col-sm-3 ingredient" id="ingredient[0]" asp-for="CreateFullRecipeModel.Ingredients[0].IngredientName" value="" placeholder="Ingredient name" disabled="disabled" />
             <input type="text" class="form-control col-sm-2 quantity" id="quant[0]" asp-for="CreateFullRecipeModel.Ingredients[0].Quantity" value="" placeholder="Quantity" disabled="disabled" />
-            <button class="btn btn-outline-warning removeBtn" type="button" id="remove">Remove</button>
+            <button class="btn btn-outline-danger removeBtn" type="button" id="remove">Remove</button>
             <span class="text-danger mx-3" id="ingredientVal[0]" asp-validation-for="CreateFullRecipeModel.Ingredients[0].IngredientName"></span>
             <span class="text-danger mx-3" id="quantVal[0]" asp-validation-for="CreateFullRecipeModel.Ingredients[0].Quantity"></span>
         </div>
@@ -34,7 +34,8 @@
     </div>
     <button id="submitButton" class="btn btn-primary" type="submit">Save Recipe</button>
 </form>
-
+<br />
+<hr width="100%" style="border-top: double #ffe272" />
 
 @section scripts{
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -48,7 +49,7 @@
             var $i = 0;
             $('#addButton').click(function (event) {
                 event.preventDefault();
-                
+
                 var $newField = $("#ingredientTemplate").clone().appendTo('#ingredients');
                 $newField.attr("id", 'ingredient' + $i);
                 $newField.removeAttr("hidden");
@@ -73,7 +74,7 @@
                 $i++;
             });
 
-            $('#myForm').on("click",".removeBtn", function (event) {
+            $('#myForm').on("click", ".removeBtn", function (event) {
                 event.preventDefault();
                 $(this).closest('.input-group').remove();
             });

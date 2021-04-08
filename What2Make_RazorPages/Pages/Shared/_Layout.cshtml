@@ -6,10 +6,11 @@
     <title>@ViewData["Title"] - What2Make_RazorPages</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/custom.css" />
 </head>
-<body>
+<body style="background-color: #e9ecef" name="body">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #ffe272">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">What2Make?!</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -19,10 +20,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/SearchRecipesByIngredients">Search Recipes by Ingredients</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/SearchRecipesByIngredients">Search by Ingredients</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/AddRecipe">Add Recipe</a>
@@ -36,8 +34,8 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="container jumbotron" style="background-color:white">
+        <main role="main" class="pb-3 min-vh-100" style="background-color:white">
             @RenderBody()
         </main>
     </div>

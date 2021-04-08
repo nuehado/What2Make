@@ -30,14 +30,14 @@ else
             @{int i = 0;}
             @foreach (var ingredient in Model.UpdatedRecipe.UpdatedIngredients)
             {
-            <div class="input-group mb-1 updateIngredients">
-                <input type="text" class="form-control col-sm-3 updateIngredient" asp-for="UpdatedRecipe.UpdatedIngredients[i].IngredientName" disabled="disabled" />
-                <input type="text" class="form-control col-sm-2 updateQuantity" asp-for="UpdatedRecipe.UpdatedIngredients[i].Quantity" />
-                <input type="hidden" class="updateId" asp-for="UpdatedRecipe.UpdatedIngredients[i].Id"/>
-                <button class="btn btn-outline-warning removeBtn" type="button" id="remove">Remove</button>
-                <span class="text-danger mx-3" asp-validation-for="UpdatedRecipe.UpdatedIngredients[i].IngredientName"></span>
-                <span class="text-danger mx-3" asp-validation-for="UpdatedRecipe.UpdatedIngredients[i].Quantity"></span>
-            </div>
+                <div class="input-group mb-1 updateIngredients">
+                    <input type="text" class="form-control col-sm-3 updateIngredient" asp-for="UpdatedRecipe.UpdatedIngredients[i].IngredientName" disabled="disabled" />
+                    <input type="text" class="form-control col-sm-2 updateQuantity" asp-for="UpdatedRecipe.UpdatedIngredients[i].Quantity" />
+                    <input type="hidden" class="updateId" asp-for="UpdatedRecipe.UpdatedIngredients[i].Id" />
+                    <button class="btn btn-outline-danger removeBtn" type="button" id="remove">Remove</button>
+                    <span class="text-danger mx-3" asp-validation-for="UpdatedRecipe.UpdatedIngredients[i].IngredientName"></span>
+                    <span class="text-danger mx-3" asp-validation-for="UpdatedRecipe.UpdatedIngredients[i].Quantity"></span>
+                </div>
                 i++;
             }
         </div>
@@ -46,7 +46,7 @@ else
                 @{Model.UpdatedRecipe.NewIngredients.Add(new Models.Create.CreateIngredientModel());}
                 <input type="text" class="form-control col-sm-3 newIngredient" asp-for="UpdatedRecipe.NewIngredients[0].IngredientName" placeholder="Ingredient name" />
                 <input type="text" class="form-control col-sm-2 newQuantity" asp-for="UpdatedRecipe.NewIngredients[0].Quantity" placeholder="Quantity" />
-                <button class="btn btn-outline-warning removeBtn" type="button" id="remove">Remove</button>
+                <button class="btn btn-outline-danger removeBtn" type="button" id="remove">Remove</button>
                 <span class="text-danger mx-3" asp-validation-for="UpdatedRecipe.NewIngredients[0].IngredientName"></span>
                 <span class="text-danger mx-3" asp-validation-for="UpdatedRecipe.NewIngredients[0].Quantity"></span>
             </div>
@@ -64,6 +64,8 @@ else
     </form>
 
 }
+<br />
+<hr width="100%" style="border-top: double #ffe272" />
 
 @section scripts{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
@@ -122,7 +124,7 @@ else
                     })
                     $i = 0;
                     $('.updateId').each(function (i, obj) {
-                        $(this).attr("name", 'UpdatedRecipe.RemovedIngredients[' + $i + '].Id'); 
+                        $(this).attr("name", 'UpdatedRecipe.RemovedIngredients[' + $i + '].Id');
                         $i++;
                     })
                     $i = 0;

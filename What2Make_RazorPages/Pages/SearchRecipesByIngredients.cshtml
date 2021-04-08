@@ -4,12 +4,12 @@
     ViewData["Title"] = "SearchRecipesByIngredient";
 }
 
-<h1>Search Recipes</h1>
+<h2>Search Recipes</h2>
 
 <form method="post" asp-page-handler="OnPost">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <input asp-for="Ingredients" class="form-control col-sm-5"  value="" placeholder="Ingredient 1" />
+        <input asp-for="Ingredients" class="form-control col-sm-5" value="" placeholder="Ingredient 1" />
         <span asp-validation-for="Ingredients" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -37,13 +37,15 @@
 {
     <div class="text-danger">@Model.errorString</div>
 }
+<br />
+<hr width="100%" style="border-top: double #ffe272" />
 
 @if (Model.RecipeSearchResults != null)
 {
 
     <table class="table table-striped">
         <thead>
-            <tr class="text-center">
+            <tr class="text-center thead-dark">
                 <th scope="col">Recipe</th>
                 <th scope="col">Decription</th>
                 <th scope="col">Ingredient Matches</th>
@@ -65,7 +67,6 @@
             }
         </tbody>
     </table>
-
-
-
+    <br />
+    <hr width="100%" style="border-top: double #ffe272" />
 }

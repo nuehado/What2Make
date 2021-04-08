@@ -15,14 +15,11 @@ else if (Model.recipe is null)
 }
 else
 {
-    <h3 class="text-center">@Model.recipe.Recipe.RecipeName</h3>
+    <h1 class="display-4 font-weight-bold text-center">@Model.recipe.Recipe.RecipeName</h1>
 
-
-    <dl class="row">
-        <dt class="col-sm-2">Description</dt>
-        <dd class="col-sm">@Model.recipe.Recipe.Description</dd>
-    </dl>
-    <hr width="75%" />
+    <h4 class="text-center" style="color: #646462">@Model.recipe.Recipe.Description</h4>
+    <br />
+    <hr width="100%" style="border-top: double #ffe272" />
     <dl class="row">
         <dt class="col-sm-2">Ingredients</dt>
         <dd class="col-sm">
@@ -32,14 +29,19 @@ else
             }
         </dd>
     </dl>
-    <hr width="75%" />
+    <br />
+    <hr width="100%" style="border-top: double #ffe272" />
     <dl class="row">
         <dt class="col-sm-2">Instructions</dt>
         <dd class="col-sm" style="white-space: pre-line">@Model.recipe.Recipe.Instructions</dd>
     </dl>
 
-    <form method="post">
-        <button class="btn btn-primary" type="submit">Edit Recipe</button>
+    <br />
+    <hr width="100%" style="border-top: double #ffe272" />
+
+    <form method="post" class="text-right">
+        <button class="btn btn-secondary btn-sm" type="submit">Edit Recipe</button>
     </form>
 
 }
+
