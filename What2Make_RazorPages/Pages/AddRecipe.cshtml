@@ -6,6 +6,13 @@
 
 <h1>Add Recipe</h1>
 
+@{ 
+    if (string.IsNullOrWhiteSpace(Model.ErrorString) == false)
+    {
+        <span class="text-danger">@Model.ErrorString</span>
+    }
+}
+
 <form id="myForm" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div>

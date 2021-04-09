@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spRecipies_ReadById]
+﻿CREATE PROCEDURE [dbo].[spRecipes_ReadById]
 	@Id int
 AS
 begin
@@ -6,7 +6,7 @@ begin
 	set nocount on;
 
 	SELECT [Id], [RecipeName], [Description], [Instructions]
-	from dbo.Recipies
+	from dbo.Recipes
 	where Id = @Id;
 
 end

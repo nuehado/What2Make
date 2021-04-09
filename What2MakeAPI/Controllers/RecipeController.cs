@@ -56,6 +56,11 @@ namespace What2MakeAPI.Controllers
         {
             int id = await _recipeData.CreateRecipe(fullRecipe.Recipe);
 
+            if (id == 0)
+            {
+                return BadRequest(new DuplicateWaitObjectException());
+            }
+
             foreach (var ingredient in fullRecipe.Ingredients)
             {
                 await _ingredientData.CreateIngredient(ingredient, id);
@@ -158,6 +163,7 @@ namespace What2MakeAPI.Controllers
             foreach (var recipeIngredient in updatedRecipe.RemovedIngredients)
             {
                 await _ingredientData.DeleteRecipeIngredient(updatedRecipe.Recipe.Id, recipeIngredient.IngredientId);
+                
             }
 
             return Ok(new { updatedRecipe.Recipe.Id });
@@ -186,7 +192,30 @@ namespace What2MakeAPI.Controllers
                 ingredients.Add("");
             }
 
-            search.recipes = await _recipeData.SearchRecipiesByIngredient(ingredients[0], ingredients[1], ingredients[2], ingredients[3], ingredients[4]);
+            search.recipes = await _recipeData.SearchRecipesByIngredient(ingredients[0], ingredients[1], ingredients[2], ingredients[3], ingredients[4]);
+
+            if (search.recipes.Count < 1)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(search);
+            }
+        }
+
+        [HttpGet("{recipeName}")]
+        [ActionName("NameSearch")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Get(string recipeName)
+        {
+            if (string.IsNullOrWhiteSpace(recipeName))
+            {
+                return BadRequest();
+            }
+            search.recipes = await _recipeData.SearchRecipesByName(recipeName);
 
             if (search.recipes.Count < 1)
             {
@@ -198,4 +227,6 @@ namespace What2MakeAPI.Controllers
             }
         }
     }
+
+
 }

@@ -8,14 +8,14 @@ begin
 	
 	set nocount on;
 
-	if not exists (select 1 from dbo.Recipies where RecipeName = @RecipeName)
+	if not exists (select 1 from dbo.Recipes where RecipeName = @RecipeName)
 	begin
-		insert into dbo.Recipies(RecipeName, [Description], Instructions)
+		insert into dbo.Recipes(RecipeName, [Description], Instructions)
 		values (@RecipeName, @Description, @Instructions);
 	end
 	
 	select top 1 @Id = Id
-	from dbo.Recipies
+	from dbo.Recipes
 	where RecipeName = @RecipeName;
 	
 	print @Id
@@ -41,7 +41,7 @@ begin
 	from dbo.Ingredients
 	where IngredientName = @IngredientName;
 	
-	insert into dbo.RecipiesIngredients(RecipeId, IngredientId, Quantity)
+	insert into dbo.RecipesIngredients(RecipeId, IngredientId, Quantity)
 	values (@RecipeId, @Id, @Quantity);
 
 end
@@ -59,8 +59,8 @@ begin
 
 	with t as(
 	select r.Id, r.RecipeName, [Description], ROW_NUMBER() over(partition by RecipeName order by RecipeName) as Matches 
-	from dbo.Recipies r
-		inner join dbo.RecipiesIngredients ri on ri.RecipeId = r.Id
+	from dbo.Recipes r
+		inner join dbo.RecipesIngredients ri on ri.RecipeId = r.Id
 		inner join dbo.Ingredients i on i.Id = ri.IngredientId
 		where i.IngredientName like '%'+@Ingredient1+'%'
 		or i.IngredientName like '%'+@Ingredient2+'%'
@@ -85,7 +85,7 @@ begin
 
 	select i.[Id], [IngredientName], [Quantity]
 	from dbo.Ingredients i
-	inner join dbo.RecipiesIngredients ri on RecipeId = @RecipeId
+	inner join dbo.RecipesIngredients ri on RecipeId = @RecipeId
 	where i.Id = ri.IngredientId;
 end
 */
@@ -98,7 +98,7 @@ begin
 	declare @Instructions nvarchar(2000) = 'updated instructions';
 	set nocount on;
 
-	update dbo.Recipies
+	update dbo.Recipes
 	set RecipeName = @RecipeName,
 	[Description] = @Description,
 	Instructions = @Instructions
@@ -115,7 +115,7 @@ begin
 
 	set nocount on;
 
-	update dbo.RecipiesIngredients
+	update dbo.RecipesIngredients
 	set Quantity = @Quantity
 	where RecipeId = @RecipeId and IngredientId = @IngredientId
 

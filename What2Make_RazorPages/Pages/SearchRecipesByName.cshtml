@@ -1,42 +1,29 @@
 ﻿@page
-@model What2Make_RazorPages.Pages.SearchRecipesByIngredientsModel
+@model What2Make_RazorPages.Pages.SearchRecipesByNameModel
 @{
-    ViewData["Title"] = "SearchRecipesByIngredient";
+    ViewData["Title"] = "SearchRecipesByName";
 }
 
 <h2>Search Recipes</h2>
 
+
+
 <form method="post" asp-page-handler="OnPost">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <input asp-for="Ingredients" class="form-control col-sm-5" value="" placeholder="Ingredient 1" />
-        <span asp-validation-for="Ingredients" class="text-danger"></span>
+        <input asp-for="RecipeName" class="form-control col-sm-5" value="" placeholder="Recipe Name" />
+        <span asp-validation-for="RecipeName" class="text-danger"></span>
+        @if (string.IsNullOrWhiteSpace(Model.ErrorString) == false)
+        {
+            <div class="text-danger">@Model.ErrorString</div>
+        }
     </div>
-    <div class="form-group">
-        <input asp-for="Ingredients" class="form-control col-sm-5" value="" placeholder="Ingredient 2" />
-        <span asp-validation-for="Ingredients" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <input asp-for="Ingredients" class="form-control col-sm-5" value="" placeholder="Ingredient 3" />
-        <span asp-validation-for="Ingredients" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <input asp-for="Ingredients" class="form-control col-sm-5" value="" placeholder="Ingredient 4" />
-        <span asp-validation-for="Ingredients" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <input asp-for="Ingredients" class="form-control col-sm-5" value="" placeholder="Ingredient 5" />
-        <span asp-validation-for="Ingredients" class="text-danger"></span>
-    </div>
+    
     <div class="form-group">
         <input type="submit" value="Search Recipes" class="btn btn-primary" />
     </div>
 </form>
 
-@if (string.IsNullOrWhiteSpace(Model.errorString) == false)
-{
-    <div class="text-danger">@Model.errorString</div>
-}
 <br />
 <hr width="100%" style="border-top: double #ffe272" />
 

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spRecipies_UpdateRecipe]
+﻿CREATE PROCEDURE [dbo].[spRecipes_UpdateRecipe]
 	@Id int,
 	@RecipeName nvarchar(50),
 	@Description nvarchar(200),
@@ -8,7 +8,7 @@ begin
 
 	set nocount on;
 
-	update dbo.Recipies
+	update dbo.Recipes
 	set RecipeName = @RecipeName,
 	[Description] = @Description,
 	Instructions = @Instructions

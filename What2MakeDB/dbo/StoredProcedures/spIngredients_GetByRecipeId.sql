@@ -6,7 +6,7 @@ begin
 
 	select i.[Id], [IngredientName], [Quantity]
 	from dbo.Ingredients i
-	inner join dbo.RecipiesIngredients ri on RecipeId = @RecipeId
+	inner join dbo.RecipesIngredients ri on RecipeId = @RecipeId
 	where i.Id = ri.IngredientId;
 
 end

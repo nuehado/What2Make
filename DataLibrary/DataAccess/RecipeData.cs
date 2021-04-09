@@ -21,11 +21,16 @@ namespace DataLibrary.DataAccess
             _connectionStringName = connectionStringData.SqlConnectionStringName;
         }
 
-        public Task<List<RecipeSearchResultModel>> SearchRecipiesByIngredient(string Ingredient1, string Ingredient2 = null, string Ingredient3 = null, string Ingredient4 = null, string Ingredient5 = null)
+        public Task<List<RecipeSearchResultModel>> SearchRecipesByIngredient(string Ingredient1, string Ingredient2 = null, string Ingredient3 = null, string Ingredient4 = null, string Ingredient5 = null)
         {
-            return _dbAccess.LoadData<RecipeSearchResultModel, dynamic>("dbo.spRecipies_IngredientsSearch",
+            return _dbAccess.LoadData<RecipeSearchResultModel, dynamic>("dbo.spRecipes_GetByIngredients",
                                                                   new { Ingredient1, Ingredient2, Ingredient3, Ingredient4, Ingredient5 },
                                                                   _connectionStringName);
+        }
+
+        public Task<List<RecipeSearchResultModel>> SearchRecipesByName(string recipeName)
+        {
+            return _dbAccess.LoadData<RecipeSearchResultModel, dynamic>("dbo.spRecipes_GetByName", new { RecipeName = recipeName }, _connectionStringName);
         }
 
         public async Task<int> CreateRecipe(RecipeModel recipe)
@@ -37,19 +42,21 @@ namespace DataLibrary.DataAccess
             p.Add("Instructions", recipe.Instructions);
             p.Add("Id", DbType.Int32, direction: ParameterDirection.Output);
 
-            await _dbAccess.SaveData("dbo.spRecipies_CreateNew", p, _connectionStringName);
+            await _dbAccess.SaveData("dbo.spRecipes_CreateNew", p, _connectionStringName);
 
-            return p.Get<int>("Id");
+            int id = p.Get<int>("Id");
+
+            return id;
         }
 
         public async Task<int> UpdateRecipe(RecipeModel recipe)
         {
-            return await _dbAccess.SaveData("dbo.spRecipies_UpdateRecipe", new { Id = recipe.Id, RecipeName = recipe.RecipeName, Description = recipe.Description, Instructions = recipe.Instructions }, _connectionStringName);
+            return await _dbAccess.SaveData("dbo.spRecipes_UpdateRecipe", new { Id = recipe.Id, RecipeName = recipe.RecipeName, Description = recipe.Description, Instructions = recipe.Instructions }, _connectionStringName);
         }
 
         public async Task<RecipeModel> GetRecipeById(int orderId)
         {
-            var recipe = await _dbAccess.LoadData<RecipeModel, dynamic>("dbo.spRecipies_ReadById", new { Id = orderId }, _connectionStringName);
+            var recipe = await _dbAccess.LoadData<RecipeModel, dynamic>("dbo.spRecipes_ReadById", new { Id = orderId }, _connectionStringName);
 
             return recipe.FirstOrDefault();
         }

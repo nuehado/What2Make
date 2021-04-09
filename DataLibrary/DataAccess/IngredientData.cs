@@ -20,7 +20,7 @@ namespace DataLibrary.DataAccess
 
         public Task CreateIngredient(IngredientFullModel ingredient, int recipeId)
         {
-            return _dbAccess.SaveData("dbo.spIngredients_CreateNew", new { IngredientName = ingredient.IngredientName, Quantity = ingredient.Quantity, RecipeId = recipeId }, _connectionStringName);
+            return _dbAccess.SaveData("dbo.spIngredients_CreateNew", new { ingredient.IngredientName, Quantity = ingredient.Quantity, RecipeId = recipeId }, _connectionStringName);
         }
 
         public Task<List<IngredientFullModel>> GetIngredientsByRecipieId(int recipeId)
@@ -30,7 +30,7 @@ namespace DataLibrary.DataAccess
 
         public async Task<int> UpdateIngredientQuantity(int recipeId, IngredientQuantityUpdateModel ingredient)
         {
-            return await _dbAccess.SaveData("dbo.spRecipiesIngredients_UpdateQuantity", new { RecipeId = recipeId, IngredientId = ingredient.Id, Quantity = ingredient.Quantity }, _connectionStringName);
+            return await _dbAccess.SaveData("dbo.spRecipesIngredients_UpdateQuantity", new { RecipeId = recipeId, IngredientId = ingredient.Id, Quantity = ingredient.Quantity }, _connectionStringName);
         }
 
         public async Task<int> DeleteRecipeIngredient(int recipeId, int ingredientId)

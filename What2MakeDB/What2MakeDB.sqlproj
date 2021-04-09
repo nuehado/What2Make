@@ -60,19 +60,20 @@
     <Folder Include="Scripts" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\Recipies.sql" />
     <Build Include="dbo\Tables\Ingredients.sql" />
-    <Build Include="dbo\Tables\RecipiesIngredients.sql" />
-    <Build Include="dbo\StoredProcedures\spRecipies_ReadAll.sql" />
-    <Build Include="dbo\StoredProcedures\spRecipies_ReadById.sql" />
-    <Build Include="dbo\StoredProcedures\spRecipies_CreateNew.sql" />
     <Build Include="dbo\StoredProcedures\spIngredients_CreateNew.sql" />
     <Build Include="Scripts\StoredProcedureTests.sql" />
-    <Build Include="dbo\StoredProcedures\spRecipies_IngredientsSearch.sql" />
     <Build Include="dbo\StoredProcedures\spIngredients_GetByRecipeId.sql" />
-    <Build Include="dbo\StoredProcedures\spRecipies_UpdateRecipe.sql" />
-    <Build Include="dbo\StoredProcedures\spRecipiesIngredients_UpdateQuantity.sql" />
     <Build Include="dbo\StoredProcedures\spRecipesIngredients_Delete.sql" />
+    <Build Include="dbo\StoredProcedures\spRecipes_GetByName.sql" />
+    <Build Include="dbo\StoredProcedures\spRecipes_CreateNew.sql" />
+    <Build Include="dbo\StoredProcedures\spRecipes_GetAll.sql" />
+    <Build Include="dbo\StoredProcedures\spRecipes_GetByIngredients.sql" />
+    <Build Include="dbo\StoredProcedures\spRecipes_ReadById.sql" />
+    <Build Include="dbo\StoredProcedures\spRecipes_UpdateRecipe.sql" />
+    <Build Include="dbo\StoredProcedures\spRecipesIngredients_UpdateQuantity.sql" />
+    <Build Include="dbo\Tables\RecipesIngredients.sql" />
+    <Build Include="dbo\Tables\Recipes.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

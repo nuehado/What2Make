@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spRecipies_IngredientsSearch]
+﻿CREATE PROCEDURE [dbo].[spRecipes_GetByIngredients]
 	@Ingredient1 nvarchar(50),
 	@Ingredient2 nvarchar(50),
 	@Ingredient3 nvarchar(50),
@@ -10,8 +10,8 @@ begin
 
 	with t as(
 	select r.Id, r.RecipeName, [Description], ROW_NUMBER() over(partition by RecipeName order by RecipeName) as Matches 
-	from dbo.Recipies r
-		inner join dbo.RecipiesIngredients ri on ri.RecipeId = r.Id
+	from dbo.Recipes r
+		inner join dbo.RecipesIngredients ri on ri.RecipeId = r.Id
 		inner join dbo.Ingredients i on i.Id = ri.IngredientId
 		where i.IngredientName like '%'+@Ingredient1+'%'
 		or i.IngredientName like '%'+@Ingredient2+'%'

@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Recipies]
+﻿CREATE TABLE [dbo].[Recipes]
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
     [RecipeName] NVARCHAR(50) NOT NULL, 

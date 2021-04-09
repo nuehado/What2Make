@@ -18,9 +18,9 @@ begin
 	from dbo.Ingredients
 	where IngredientName = @IngredientName;
 	
-	if not exists (select 1 from dbo.RecipiesIngredients where RecipeId = @RecipeId and IngredientId = @IngredientId)
+	if not exists (select 1 from dbo.RecipesIngredients where RecipeId = @RecipeId and IngredientId = @IngredientId)
 	begin
-	insert into dbo.RecipiesIngredients(RecipeId, IngredientId, Quantity)
+	insert into dbo.RecipesIngredients(RecipeId, IngredientId, Quantity)
 	values (@RecipeId, @IngredientId, @Quantity);
 	end
 

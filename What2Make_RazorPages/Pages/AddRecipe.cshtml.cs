@@ -15,7 +15,8 @@ namespace What2Make_RazorPages.Pages
         [BindProperty]
         public CreateFullRecipeModel CreateFullRecipeModel { get; set; }
 
-        public string errorString;
+        [BindProperty(SupportsGet = true)]
+        public string ErrorString { get; set; }
 
         private readonly IHttpClientFactory _clientFactory;
 
@@ -26,14 +27,15 @@ namespace What2Make_RazorPages.Pages
 
         public void OnGet()
         {
+
         }
 
         public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid == false)
             {
-                string message = "Recipe input was invalid. Please try again.";
-                return Content(message);
+                ErrorString = "Recipe input was invalid. Please try again.";
+                return Content(ErrorString);
             }
 
             var client = _clientFactory.CreateClient("w2m");
@@ -41,14 +43,23 @@ namespace What2Make_RazorPages.Pages
             try
             {
                 var response = await client.PostAsJsonAsync("recipe/create", CreateFullRecipeModel);
-                var contents = await response.Content.ReadFromJsonAsync<RecipeCreateResultsModel>();
-                errorString = null;
-                return RedirectToPage("./recipe", new { contents.Id });
+                if (response.IsSuccessStatusCode)
+                {
+                    var contents = await response.Content.ReadFromJsonAsync<RecipeCreateResultsModel>();
+                    ErrorString = null;
+                    return RedirectToPage("./recipe", new { contents.Id });
+                }
+                else
+                {
+                    ErrorString = $"{CreateFullRecipeModel.Recipe.RecipeName} already exists in What2Make";
+                    return RedirectToPage("./AddRecipe", new { ErrorString });
+                }
+                
             }
             catch (Exception ex)
             {
-                errorString = $"There was an error saving your recipe: {ex.Message}";
-                return Page();
+                ErrorString = $"There was an error saving your recipe: {ex.Message}";
+                return RedirectToPage("./AddRecipe", new { ErrorString });
             }
         }
     }
