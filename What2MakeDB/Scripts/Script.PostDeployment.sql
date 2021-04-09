@@ -55,7 +55,7 @@ begin
     set @recipeId = SCOPE_IDENTITY();
     
     insert into dbo.Ingredients (IngredientName)
-    values ('romain lettuce');
+    values ('romaine lettuce');
     set @ingredientId = SCOPE_IDENTITY();
 
     insert into dbo.RecipesIngredients (RecipeId, IngredientId, Quantity)
